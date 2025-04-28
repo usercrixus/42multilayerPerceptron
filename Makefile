@@ -6,6 +6,8 @@ OBJ1 = \
 	src/Trainer.o \
 	src/Infer.o \
 
+CXXFLAGS = -I src/ -Wall -Wextra -O2
+
 train.out: $(OBJ1) src/mainTrain.o
 	c++ $^ -o $@
 
@@ -16,7 +18,12 @@ infer.out: $(OBJ1) src/mainInfer.o
 	c++ $^ -o $@
 
 %.o: %.cpp
-	c++ -c $< -o $@
+	c++ $(CXXFLAGS) -c $< -o $@
+
+init:
+	python3 -m venv venv \
+	source venv/bin/activate \
+	pip install pandas matplotlib
 
 clean:
 	rm -f $(OBJ1) train.out 

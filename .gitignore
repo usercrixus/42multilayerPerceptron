@@ -1,3 +1,6 @@
 *.o
 *.out
 *.obj
+*.csv
+*.png
+venv

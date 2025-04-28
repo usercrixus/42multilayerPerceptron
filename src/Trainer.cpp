@@ -1,16 +1,27 @@
 #include "Trainer.hpp"
 
-Trainer::Trainer(MultilayerPerceptron &mlp, std::vector<std::vector<double>> &data, std::vector<std::vector<double>> &valData, int epoch, double learningRate):
+Trainer::Trainer(MultilayerPerceptron &mlp, std::vector<std::vector<double>> &trainingData, std::vector<std::vector<double>> &valData, int epoch, double learningRate, bool csv):
 mlp(mlp),
-data(data),
+trainingData(trainingData),
+valData(valData),
 epoch(epoch),
 learningRate(learningRate),
-valData(valData)
+csvLoss(0),
+csvAccuracy(0)
 {
+    if (csv)
+    {
+        csvLoss = std::ofstream("csvLoss.csv");
+        csvAccuracy = std::ofstream("csvAccuracy.csv");
+    }
 }
 
 Trainer::~Trainer()
 {
+    if (csvAccuracy)
+        csvAccuracy.close();
+    if (csvLoss)
+        csvLoss.close();
 }
 
 double computeValidationAcc(MultilayerPerceptron &mlp, const std::vector<std::vector<double>> &valData)
@@ -46,17 +57,21 @@ bool Trainer::earlyStop()
 	return (false);
 }
 
+void Trainer::buildCSV(int epoch, double loss, double accuracy)
+{
+    csvLoss << epoch << "," << loss << std::endl;
+    csvAccuracy << epoch << "," << accuracy << std::endl;
+}
+
 void Trainer::train()
 {
     std::mt19937 gen{std::random_device{}()};
-    double bestVal = 0.0;
-    int noImprove = 0;
 	int epoch = 0;
     while (epoch++ < this->epoch && !earlyStop())
     {
-        std::shuffle(data.begin(), data.end(), gen);
+        std::shuffle(trainingData.begin(), trainingData.end(), gen);
         this->trainLoss = 0.0;
-        for (const auto& row : data)
+        for (const auto& row : trainingData)
         {
             double label = row[0];
             std::vector<double> input{row.begin() + 1, row.end()};
@@ -65,7 +80,7 @@ void Trainer::train()
             mlp.trainStep(input, label, learningRate);
         }
         double valAcc = computeValidationAcc(mlp, valData);
-        std::cout << "Epoch " << epoch << "  trainLoss=" << trainLoss / data.size() << "  valAcc=" << valAcc << std::endl;
+        buildCSV(epoch, trainLoss / trainingData.size(), valAcc);
     }
 }
 

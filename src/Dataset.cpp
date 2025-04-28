@@ -49,7 +49,7 @@ bool Dataset::isDatasetCorrect()
 {
 	if (data.size() == 0)
 		return (false);
-	int len = data[0].size();
+	size_t len = data[0].size();
 	for (const auto &d : data)
 	{
 		if (d.size() != len)
