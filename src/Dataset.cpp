@@ -38,33 +38,7 @@ bool Dataset::loadDataset()
         data.push_back(row);
     }
     file.close();
-
-
     return (isDatasetCorrect());
-}
-
-double Dataset::getMaxOfColumn(int column)
-{
-    double max = 0.0;
-    for (size_t i = 0; i < data.size(); ++i)
-    {
-        if (data[i][column] > max)
-            max = data[i][column];
-    }
-    return max;
-}
-
-void Dataset::normalize()
-{
-    for (int col = 1; col < data[0].size(); ++col) // Start at 1 to skip label
-    {
-        double max = getMaxOfColumn(col);
-        if (max == 0) continue; // avoid division by 0
-        for (int row = 0; row < data.size(); ++row)
-        {
-            data[row][col] /= max;
-        }
-    }
 }
 
 bool Dataset::isDatasetCorrect()
@@ -78,6 +52,38 @@ bool Dataset::isDatasetCorrect()
 			return (std::cout << "Dataset is malformed" << std::endl, false);
 	}
 	return (true);
+}
+void Dataset::normalize()
+{
+    size_t featureCount = data[0].size() - 1; // Exclude label
+    std::vector<double> means(featureCount, 0.0);
+    std::vector<double> stddevs(featureCount, 0.0);
+
+    // Compute means
+    for (size_t col = 0; col < featureCount; ++col)
+    {
+        for (const auto& row : data)
+            means[col] += row[col + 1];
+        means[col] /= data.size();
+    }
+    // Compute standard deviations
+    for (size_t col = 0; col < featureCount; ++col)
+    {
+        for (const auto& row : data)
+            stddevs[col] += (row[col + 1] - means[col]) * (row[col + 1] - means[col]);
+        stddevs[col] = std::sqrt(stddevs[col] / data.size());
+    }
+    // Normalize
+    for (auto& row : data)
+    {
+        for (size_t col = 0; col < featureCount; ++col)
+        {
+            if (stddevs[col] != 0)
+                row[col + 1] = (row[col + 1] - means[col]) / stddevs[col];
+            else
+                row[col + 1] = 0.0;
+        }
+    }
 }
 
 void Dataset::shuffle()
@@ -95,24 +101,18 @@ bool Dataset::splitData(double validationPart)
 		return (std::cout << "Validation part should be > 0 and < 1" << std::endl, false);
 	size_t i = 0;
 	while (i < static_cast<size_t>(data.size() * validationPart))
-	{
-		validationData.push_back(data[i]);
-		i++;
-	}
+		validationData.push_back(data[i++]);
 	while (i < data.size())
-	{
-		TrainingData.push_back(data[i]);
-		i++;
-	}
+		TrainingData.push_back(data[i++]);
 	return (true);
 }
 
-const std::vector<std::vector<double>> &Dataset::getTrainingData() const
+std::vector<std::vector<double>> &Dataset::getTrainingData() 
 {
     return (TrainingData);
 }
 
-const std::vector<std::vector<double>> &Dataset::getValidationData() const
+std::vector<std::vector<double>> &Dataset::getValidationData()
 {
     return (validationData);
 }

@@ -4,6 +4,8 @@ OBJ1 = \
 	src/MultilayerPerceptron.o \
 	src/Neuron.o \
 	src/main.o \
+	src/Trainer.o \
+	src/Infer.o \
 
 train.out: $(OBJ1)
 	c++ $(OBJ1) -o $@

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <random>
 #include <cmath>
@@ -8,14 +10,17 @@ class Neuron
 private:
 	std::vector<double> weights;
 	double bias;
-    double learningRate;
+	double lastSum;
+	std::vector<double> lastInput;
 
 public:
-	Neuron(size_t inputSize, double learningRate);
+	Neuron(size_t inputSize);
 	~Neuron();
 
-	double forward(const std::vector<double>& input);
-    void backward(const std::vector<double> &input, double delta);
-
-	std::vector<double> getWeights() const;
+	double forward(std::vector<double>& input);
+    double backward(double delta, bool isHiddenLayer, double learningRate);
+	
+	std::vector<double> getWeights();
+	double getLastSum();
+	void setLastSum(double sum);
 };

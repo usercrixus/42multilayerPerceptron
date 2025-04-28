@@ -1,20 +1,26 @@
+#pragma once
+
 #include <vector>
 #include "Neuron.hpp"
+#include <algorithm>
 
 class Layer {
 private:
 	std::vector<Neuron> neurons;
 	size_t inputSize;
 	size_t outputSize;
-	double learningRate;
+	bool isHiddenLayer;
 
 public:
-	Layer(size_t inputSize, size_t output_size, double learningRate);
+	Layer(size_t inputSize, size_t output_size, bool hiddenLayer);
 	~Layer();
 
-    std::vector<double> forward(const std::vector<double> &input);
-	void backward(const std::vector<double>& input, const std::vector<double>& deltas);
+    void activeNeuron(std::vector<double> &output);
 
-	std::vector<Neuron> getNeurons() const;
-	size_t getInputSize() const;
+    std::vector<double> forward(std::vector<double>& input);
+	std::vector<double> backward(std::vector<double>& deltas, double learningRate);
+    void ReLu(std::vector<double> &output);
+    void softmax(std::vector<double> &output);
+
+    std::vector<Neuron> getNeurons();
 };

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <fstream>
 #include <sstream>
@@ -23,11 +25,10 @@ public:
     ~Dataset();
 
     bool loadDataset();
-    double getMaxOfColumn(int column);
     void normalize();
     void shuffle();
     bool splitData(double validationPart);
 
-	const std::vector<std::vector<double>>& getTrainingData() const;
-	const std::vector<std::vector<double>>& getValidationData() const;
+	std::vector<std::vector<double>>& getTrainingData();
+	std::vector<std::vector<double>>& getValidationData();
 };

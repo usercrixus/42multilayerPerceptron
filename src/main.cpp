@@ -1,39 +1,27 @@
 #include "Dataset.hpp"
 #include "MultilayerPerceptron.hpp"
 #include <iostream>
+#include "Trainer.hpp"
+#include "Infer.hpp"
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
     Dataset d("data.csv", ',');
     if (!d.loadDataset())
         return 1;
     d.normalize();
     d.shuffle();
-    d.splitData(0.1);
+    d.splitData(0.2);
 
-    // Create your MLP
-    MultilayerPerceptron mlp({30, 24, 24, 1}, 0.05);
+    //
 
-    // Training
-    for (int epoch = 0; epoch < 1000; ++epoch) // 100 epochs
-    {
-        double totalLoss = 0.0;
+    MultilayerPerceptron mlp({30, 24, 24, 2});
+    Trainer train(mlp, d.getTrainingData(), d.getValidationData(), 1000, 0.01);
+    train.train();
 
-        for (const auto& row : d.getTrainingData()) // <-- We need getter for TrainingData
-        {
-            std::vector<double> input(row.begin() + 1, row.end()); // features
-            double label = row[0]; // true label
+    //
 
-            double prediction = mlp.forward(input); // Predict
-            double loss = mlp.binaryCrossEntropy(label, prediction); // Compute loss
-
-            totalLoss += loss;
-            mlp.trainStep(input, label); // Train
-        }
-
-        std::cout << "Epoch " << epoch << ", average loss = " << (totalLoss / d.getTrainingData().size()) << std::endl;
-
-    }
-
+    Infer infer(mlp, d.getValidationData());
+    infer.getPredictions();
     return 0;
 }

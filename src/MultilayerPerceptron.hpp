@@ -1,7 +1,10 @@
+#pragma once
+
 #include <cmath>
 #include <vector>
 #include "Layer.hpp"
 #include <iostream>
+#include <algorithm>
 
 class MultilayerPerceptron
 {
@@ -10,12 +13,9 @@ private:
 	double learningRate;
 
 public:
-	MultilayerPerceptron(const std::vector<size_t>& layerSizes, double learningRate);
+	MultilayerPerceptron(std::vector<size_t> layerSizes);
 	~MultilayerPerceptron();
 
-    double binaryCrossEntropy(double trueLabel, double predictedLabel);
-	double forward(const std::vector<double>& input);
-    void trainStep(const std::vector<double> &input, double trueLabel);
-    std::vector<double> computeNewDelta(const Layer &layer, const std::vector<double> &nextDelta);
-    double sigmoid(double x);
+	std::vector<double> forward(std::vector<double>& input);
+    void trainStep(std::vector<double> &input, double trueLabel, double learningRate);
 };
