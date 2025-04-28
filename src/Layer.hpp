@@ -22,5 +22,10 @@ public:
     void ReLu(std::vector<double> &output);
     void softmax(std::vector<double> &output);
 
-    std::vector<Neuron> getNeurons();
+	int getInputSize();
+	int getOutputSize();
+	bool getIsHiddenLayer();
+	std::vector<Neuron> &getNeurons();
+
+	void setNeurons(std::vector<Neuron> neurons);
 };

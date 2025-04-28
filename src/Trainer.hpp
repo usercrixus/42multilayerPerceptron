@@ -11,6 +11,9 @@ private:
 	std::vector<std::vector<double>> &valData;
 	int epoch;
 	double learningRate;
+	double computeLoss(double label, const std::vector<double>& prediction);
+    bool earlyStop();
+    double trainLoss;
 
 public:
 	~Trainer();

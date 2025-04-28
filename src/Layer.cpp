@@ -68,3 +68,28 @@ void Layer::softmax(std::vector<double> &output)
     for (size_t i = 0; i < output.size(); ++i)
         output[i] = exps[i] / sum;
 }
+
+int Layer::getInputSize()
+{
+    return (this->inputSize);
+}
+
+int Layer::getOutputSize()
+{
+    return (this->outputSize);
+}
+
+bool Layer::getIsHiddenLayer()
+{
+    return (this->isHiddenLayer);
+}
+
+std::vector<Neuron> &Layer::getNeurons()
+{
+    return (this->neurons);
+}
+
+void Layer::setNeurons(std::vector<Neuron> neurons)
+{
+    this->neurons = neurons;
+}

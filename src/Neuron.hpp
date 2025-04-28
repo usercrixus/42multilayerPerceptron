@@ -22,5 +22,9 @@ public:
 	
 	std::vector<double> getWeights();
 	double getLastSum();
+	double getBias();
+
+	void setWeights(std::vector<double> &weights);
+	void setBias(double bias);
 	void setLastSum(double sum);
 };

@@ -3,12 +3,17 @@ OBJ1 = \
 	src/Layer.o \
 	src/MultilayerPerceptron.o \
 	src/Neuron.o \
-	src/main.o \
 	src/Trainer.o \
 	src/Infer.o \
 
-train.out: $(OBJ1)
-	c++ $(OBJ1) -o $@
+train.out: $(OBJ1) src/mainTrain.o
+	c++ $^ -o $@
+
+data.out: $(OBJ1) src/mainData.o
+	c++ $^ -o $@
+
+infer.out: $(OBJ1) src/mainInfer.o
+	c++ $^ -o $@
 
 %.o: %.cpp
 	c++ -c $< -o $@

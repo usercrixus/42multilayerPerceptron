@@ -56,6 +56,21 @@ double Neuron::getLastSum()
     return (lastSum);
 }
 
+double Neuron::getBias()
+{
+    return (this->bias);
+}
+
+void Neuron::setWeights(std::vector<double> &weights)
+{
+    this->weights = weights;
+}
+
+void Neuron::setBias(double bias)
+{
+    this->bias = bias;
+}
+
 void Neuron::setLastSum(double sum)
 {
     lastSum = sum;

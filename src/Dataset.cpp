@@ -7,11 +7,15 @@ separator(separator)
 {
 }
 
+Dataset::Dataset()
+{
+}
+
 Dataset::~Dataset()
 {
 }
 
-bool Dataset::loadDataset()
+bool Dataset::loadDatasetCSV()
 {
     std::ifstream file(fileName);
     if (!file.is_open()) {
@@ -96,20 +100,76 @@ void Dataset::shuffle()
 bool Dataset::splitData(double validationPart)
 {
 	validationData.clear();
-	TrainingData.clear();
+	trainingData.clear();
 	if (validationPart <= 0 || validationPart >= 1)
 		return (std::cout << "Validation part should be > 0 and < 1" << std::endl, false);
 	size_t i = 0;
 	while (i < static_cast<size_t>(data.size() * validationPart))
 		validationData.push_back(data[i++]);
 	while (i < data.size())
-		TrainingData.push_back(data[i++]);
+		trainingData.push_back(data[i++]);
 	return (true);
+}
+
+void Dataset::saveVector(std::ofstream& out, const std::vector<std::vector<double>>& vector)
+{
+    size_t vectorSize = vector.size();
+    out.write(reinterpret_cast<const char*>(&vectorSize), sizeof(vectorSize));
+    for (const auto& row : vector) {
+        size_t rowSize = row.size();
+        out.write(reinterpret_cast<const char*>(&rowSize), sizeof(rowSize));
+        out.write(reinterpret_cast<const char*>(row.data()), rowSize * sizeof(double));
+    }
+}
+
+bool Dataset::saveDatasetObject(const std::string &filename)
+{
+    std::ofstream out(filename, std::ios::binary);
+    if (!out.is_open())
+        return (std::cerr << "Error opening file for writing: " << filename << std::endl, false);
+    saveVector(out, data);
+    saveVector(out, validationData);
+    saveVector(out, trainingData);
+    size_t fileNameSize = fileName.size();
+    out.write(reinterpret_cast<const char*>(&fileNameSize), sizeof(fileNameSize));
+    out.write(fileName.c_str(), fileNameSize);
+    out.write(reinterpret_cast<const char*>(&separator), sizeof(separator));
+    out.close();
+    return (true);
+}
+void Dataset::loadVector(std::ifstream& in, std::vector<std::vector<double>>& vector)
+{
+    size_t vectorSize;
+    in.read(reinterpret_cast<char*>(&vectorSize), sizeof(vectorSize));
+    vector.resize(vectorSize);
+    for (auto& row : vector) {
+        size_t rowSize;
+        in.read(reinterpret_cast<char*>(&rowSize), sizeof(rowSize));
+        row.resize(rowSize);
+        in.read(reinterpret_cast<char*>(row.data()), rowSize * sizeof(double));
+    }
+}
+
+bool Dataset::loadDatasetObject(const std::string &filename)
+{
+    std::ifstream in(filename, std::ios::binary);
+    if (!in.is_open())
+        return (std::cerr << "Error opening file for reading: " << filename << std::endl, false);
+    loadVector(in, data);
+    loadVector(in, validationData);
+    loadVector(in, trainingData);
+    size_t fileNameSize;
+    in.read(reinterpret_cast<char*>(&fileNameSize), sizeof(fileNameSize));
+    fileName.resize(fileNameSize);
+    in.read(fileName.data(), fileNameSize);
+    in.read(reinterpret_cast<char*>(&separator), sizeof(separator));
+    in.close();
+    return (true);
 }
 
 std::vector<std::vector<double>> &Dataset::getTrainingData() 
 {
-    return (TrainingData);
+    return (trainingData);
 }
 
 std::vector<std::vector<double>> &Dataset::getValidationData()

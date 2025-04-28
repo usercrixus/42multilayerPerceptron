@@ -1,4 +1,7 @@
 {
+    "files.exclude": {
+    "**/*.o": true
+    },
     "files.associations": {
         "iosfwd": "cpp",
         "ostream": "cpp",
@@ -73,6 +76,7 @@
         "stack": "cpp",
         "__bit_reference": "cpp",
         "__functional_03": "cpp",
-        "__string": "cpp"
+        "__string": "cpp",
+        "ios": "cpp"
     }
 }
