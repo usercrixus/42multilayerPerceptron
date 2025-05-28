@@ -12,8 +12,8 @@ int main(int argc, char *argv[])
     if (!d.loadDatasetObject(argv[1]))
         return (std::cout << "Error during the loading of " << argv[1] << std::endl, 1);
     MultilayerPerceptron mlp({30, 24, 24, 2});
-    Trainer train(mlp, d.getTrainingData(), d.getValidationData(), 1000, 0.01, true);
-    train.train();
+    Trainer train(true);
+    train.train(mlp, d.getTrainingData(), d.getValidationData(), 1000, 0.01);
     if (!mlp.saveModelObject(argv[2]))
         return (std::cout << "Error during the loading of " << argv[2] << std::endl, 1);
 

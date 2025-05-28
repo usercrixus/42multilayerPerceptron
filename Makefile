@@ -26,6 +26,9 @@ init:
 	pip install pandas matplotlib
 
 clean:
-	rm -f $(OBJ1) train.out 
+	rm -f $(OBJ1)
 
-.PHONY: clean 
+fclean: clean
+	rm -f train.out *.csv *.png *.out *.obj
+
+.PHONY: clean fclean init

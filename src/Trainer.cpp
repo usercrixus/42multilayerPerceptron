@@ -1,19 +1,10 @@
 #include "Trainer.hpp"
 
-Trainer::Trainer(MultilayerPerceptron &mlp, std::vector<std::vector<double>> &trainingData, std::vector<std::vector<double>> &valData, int epoch, double learningRate, bool csv):
-mlp(mlp),
-trainingData(trainingData),
-valData(valData),
-epoch(epoch),
-learningRate(learningRate),
+Trainer::Trainer(bool csv):
 csvLoss(0),
-csvAccuracy(0)
+csvAccuracy(0),
+isCSV(csv)
 {
-    if (csv)
-    {
-        csvLoss = std::ofstream("csvLoss.csv");
-        csvAccuracy = std::ofstream("csvAccuracy.csv");
-    }
 }
 
 Trainer::~Trainer()
@@ -27,9 +18,9 @@ Trainer::~Trainer()
 double computeValidationAcc(MultilayerPerceptron &mlp, const std::vector<std::vector<double>> &valData)
 {
     int correct = 0;
-    for (auto& row : valData) {
-        std::vector<double> input(row.begin()+1, row.end());
-        auto prediction = mlp.forward(input);
+    for (const std::vector<double> &row : valData) {
+        std::vector<double> input(row.begin() + 1, row.end());
+        std::vector<double> prediction = mlp.forward(input);
         int finalPrediction = (prediction[1] > prediction[0]) ? 1 : 0;
         if (finalPrediction == static_cast<int>(row[0]))
             ++correct;
@@ -40,9 +31,10 @@ double computeValidationAcc(MultilayerPerceptron &mlp, const std::vector<std::ve
 double Trainer::computeLoss(double label, const std::vector<double>& prediction)
 {
     double p1 = std::max(std::min(prediction[1], 1.0 - 1e-15), 1e-15);
-    return -(label * std::log(p1) + (1.0 - label) * std::log(1.0 - p1));
+    return -1 * (label * std::log(p1) + (1.0 - label) * std::log(1.0 - p1));
 }
-bool Trainer::earlyStop()
+
+bool Trainer::earlyStop(MultilayerPerceptron &mlp, std::vector<std::vector<double>> &valData)
 {
 	static int noImprove = 0;
 	static double bestVal = 0.0;
@@ -57,30 +49,46 @@ bool Trainer::earlyStop()
 	return (false);
 }
 
-void Trainer::buildCSV(int epoch, double loss, double accuracy)
+bool Trainer::initCSV()
 {
-    csvLoss << epoch << "," << loss << std::endl;
-    csvAccuracy << epoch << "," << accuracy << std::endl;
+    if (isCSV)
+    {
+        csvLoss = std::ofstream("csvLoss.csv");
+        csvAccuracy = std::ofstream("csvAccuracy.csv");
+        if (!csvLoss || !csvAccuracy)
+            return (false);
+    }
+    return (true);
 }
 
-void Trainer::train()
+void Trainer::buildCSV(int epoch, double loss, double accuracy)
 {
+    if (csvLoss)
+        csvLoss << epoch << "," << loss << std::endl;
+    if (csvAccuracy)
+        csvAccuracy << epoch << "," << accuracy << std::endl;
+}
+
+bool Trainer::train(MultilayerPerceptron &mlp, std::vector<std::vector<double>> &trainingData, std::vector<std::vector<double>> &valData, int epoch, double learningRate)
+{
+    double trainLoss;
+    if (isCSV && !initCSV())
+        return (std::cout << "Error during csv init" << std::endl, false);
     std::mt19937 gen{std::random_device{}()};
-	int epoch = 0;
-    while (epoch++ < this->epoch && !earlyStop())
+	int e = 0;
+    while (e++ < epoch && !earlyStop(mlp, valData))
     {
         std::shuffle(trainingData.begin(), trainingData.end(), gen);
-        this->trainLoss = 0.0;
-        for (const auto& row : trainingData)
+        trainLoss = 0.0;
+        for (const std::vector<double> &row : trainingData)
         {
-            double label = row[0];
             std::vector<double> input{row.begin() + 1, row.end()};
             std::vector<double> prediction = mlp.forward(input);
-            this->trainLoss += computeLoss(label, prediction);
-            mlp.trainStep(input, label, learningRate);
+            trainLoss += computeLoss(row[0], prediction);
+            mlp.trainStep(input, row[0], learningRate);
         }
-        double valAcc = computeValidationAcc(mlp, valData);
-        buildCSV(epoch, trainLoss / trainingData.size(), valAcc);
+        buildCSV(e, trainLoss / trainingData.size(), computeValidationAcc(mlp, valData));
     }
+    return (true);
 }
 

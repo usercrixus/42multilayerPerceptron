@@ -27,12 +27,38 @@ public:
     Dataset();
     ~Dataset();
 
+    /**
+     * load a csv file dataset
+     * skip id value
+     * set the diagnosis label (1 or 0)
+     * load the other feature
+     * return: true if all is right, false else.
+     */
     bool loadDatasetCSV();
+    /**
+     * classic z-score standardization
+     */
     void normalize();
+    /**
+     * shuffle the dataset to avoid bad distribution
+     */
     void shuffle();
+    /**
+     * Split the dataset in 2 part, validationData and trainingData set.
+     * return: true if all is right, false else. 
+     */
     bool splitData(double validationPart);
-
+    /**
+     * Save the object (serialization)
+     * filename: the output name of the object to save
+     * return: true if all is right, false else.  
+     */
     bool saveDatasetObject(const std::string &filename);
+    /**
+     * load the object (deserialization)
+     * filename: the input name of the object to save
+     * return: true if all is right, false else. 
+     */
     bool loadDatasetObject(const std::string &filename);
 
     std::vector<std::vector<double>>& getTrainingData();

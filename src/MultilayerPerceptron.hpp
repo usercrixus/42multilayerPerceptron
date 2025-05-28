@@ -15,6 +15,11 @@ private:
 
 public:
 	MultilayerPerceptron();
+	/**
+	 * Create a MultilayerPerceptron object
+	 * layerSizes : exemple {30, 24, 24, 2}. The input size neurons.
+	 * Here, 30 mean 30 data input, 24 mean 24 neuron input, then again 24 neuron input then 2 neuron output
+	 */
 	MultilayerPerceptron(std::vector<size_t> layerSizes);
 	~MultilayerPerceptron();
 

@@ -7,7 +7,7 @@ MultilayerPerceptron::MultilayerPerceptron()
 MultilayerPerceptron::MultilayerPerceptron(std::vector<size_t> layerSizes)
 {
     for (size_t i = 0; i < layerSizes.size() - 1; ++i)
-        layers.emplace_back(layerSizes[i], layerSizes[i+1], i != layerSizes.size() - 2);
+        layers.emplace_back(layerSizes[i], layerSizes[i + 1], i != layerSizes.size() - 2);
 }
 
 MultilayerPerceptron::~MultilayerPerceptron()
@@ -22,11 +22,18 @@ std::vector<double> MultilayerPerceptron::forward(std::vector<double>& input)
 }
 
 
-
+/**
+ * prediction[0] = 0.8;  // probabilité estimée pour la classe 0  
+ * prediction[1] = 0.2;  // probabilité estimée pour la classe 1
+ * Pour i = 0 (classe correcte) :
+ * δ[0] = prediction[0] − 1.0 = 0.8 − 1.0 = −0.2
+ * Pour i = 1 (classe incorrecte) :
+ * δ[1] = prediction[1] − 0.0 = 0.2 − 0.0 = 0.2
+ * δ[1] = prediction[1] − 0.0 = 0.2 − 0.0 = 0.2
+ */
 void MultilayerPerceptron::trainStep(std::vector<double>& input, double trueLabel, double learningRate)
 {
     std::vector<double> prediction = forward(input);
-
     std::vector<double> delta(prediction.size(), 0.0);
     for (size_t i = 0; i < prediction.size(); ++i)
         delta[i] = prediction[i] - (i == static_cast<size_t>(trueLabel) ? 1.0 : 0.0);

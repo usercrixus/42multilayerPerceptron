@@ -14,7 +14,7 @@ Layer::~Layer() {}
 std::vector<double> Layer::forward(std::vector<double>& input)
 {
     std::vector<double> output;
-    for (auto& neuron : neurons)
+    for (Neuron &neuron : neurons)
         output.push_back(neuron.forward(input));
     activeNeuron(output);
     return output;
@@ -34,39 +34,16 @@ std::vector<double> Layer::backward(std::vector<double>& deltas, double learning
     return newDeltas;
 }
 
-
-
 void Layer::activeNeuron(std::vector<double> &output)
 {
     if (isHiddenLayer)
         ReLu(output);
-    else
-        softmax(output);
 }
 
 void Layer::ReLu(std::vector<double> &output)
 {
-    for (auto &o : output)
-    {
-        o = o > 0.0 ? o : 0.01 * o;
-    }
-}
-
-void Layer::softmax(std::vector<double> &output)
-{
-    double maxLogit = *std::max_element(output.begin(), output.end());
-
-    std::vector<double> exps;
-    double sum = 0.0;
-    for (auto logit : output)
-    {
-        double e = std::exp(logit - maxLogit);
-        exps.push_back(e);
-        sum += e;
-    }
-
-    for (size_t i = 0; i < output.size(); ++i)
-        output[i] = exps[i] / sum;
+    for (double &o : output)
+        o = o > 0.0 ? o : 0.0;
 }
 
 int Layer::getInputSize()

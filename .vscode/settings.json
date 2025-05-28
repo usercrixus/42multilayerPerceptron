@@ -1,6 +1,6 @@
 {
     "files.exclude": {
-    "**/*.o": true
+        "**/*.o": true
     },
     "files.associations": {
         "iosfwd": "cpp",
@@ -77,6 +77,8 @@
         "__bit_reference": "cpp",
         "__functional_03": "cpp",
         "__string": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "complex": "cpp",
+        "cinttypes": "cpp"
     }
 }

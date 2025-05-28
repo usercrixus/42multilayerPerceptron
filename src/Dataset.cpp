@@ -66,19 +66,19 @@ void Dataset::normalize()
     // Compute means
     for (size_t col = 0; col < featureCount; ++col)
     {
-        for (const auto& row : data)
+        for (const std::vector<double> &row : data)
             means[col] += row[col + 1];
         means[col] /= data.size();
     }
     // Compute standard deviations
     for (size_t col = 0; col < featureCount; ++col)
     {
-        for (const auto& row : data)
+        for (const std::vector<double> &row: data)
             stddevs[col] += (row[col + 1] - means[col]) * (row[col + 1] - means[col]);
         stddevs[col] = std::sqrt(stddevs[col] / data.size());
     }
     // Normalize
-    for (auto& row : data)
+    for (std::vector<double> &row : data)
     {
         for (size_t col = 0; col < featureCount; ++col)
         {
