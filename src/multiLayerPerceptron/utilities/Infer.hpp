@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MultilayerPerceptron.hpp"
+#include "../MultilayerPerceptron.hpp"
 #include <iostream>
 
 class Infer
@@ -12,8 +12,6 @@ private:
 public:
 	Infer(MultilayerPerceptron &mlp, std::vector<std::vector<double>> &data);
 	~Infer();
-
-    double computeValidationAcc();
 
     void getPredictions();
 };

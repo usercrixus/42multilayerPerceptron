@@ -1,8 +1,8 @@
-#include "Dataset.hpp"
-#include "MultilayerPerceptron.hpp"
+#include "dataset/Dataset.hpp"
+#include "multiLayerPerceptron/MultilayerPerceptron.hpp"
 #include <iostream>
-#include "Trainer.hpp"
-#include "Infer.hpp"
+#include "multiLayerPerceptron/utilities/Trainer.hpp"
+#include "multiLayerPerceptron/utilities/Infer.hpp"
 
 int main(int argc, char *argv[])
 {

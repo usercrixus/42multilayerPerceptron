@@ -176,3 +176,8 @@ std::vector<std::vector<double>> &Dataset::getValidationData()
 {
     return (validationData);
 }
+
+std::vector<std::vector<double>> &Dataset::getData()
+{
+    return (data);
+}

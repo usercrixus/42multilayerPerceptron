@@ -1,10 +1,10 @@
 OBJ1 = \
-	src/Dataset.o \
-	src/Layer.o \
-	src/MultilayerPerceptron.o \
-	src/Neuron.o \
-	src/Trainer.o \
-	src/Infer.o \
+	src/dataset/Dataset.o \
+	src/multiLayerPerceptron/Layer.o \
+	src/multiLayerPerceptron/MultilayerPerceptron.o \
+	src/multiLayerPerceptron/Neuron.o \
+	src/multiLayerPerceptron/utilities/Trainer.o \
+	src/multiLayerPerceptron/utilities/Infer.o \
 
 CXXFLAGS = -I src/ -Wall -Wextra -O2
 

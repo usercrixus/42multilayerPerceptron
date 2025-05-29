@@ -10,20 +10,12 @@ Infer::~Infer()
 {
 }
 
-double Infer::computeValidationAcc()
+void Infer::getPredictions()
 {
-    int correct = 0;
     for (auto& row : data) {
         std::vector<double> input(row.begin()+1, row.end());
         auto prediction = mlp.forward(input);
         int finalPrediction = (prediction[1] > prediction[0]) ? 1 : 0;
-        if (finalPrediction == static_cast<int>(row[0]))
-            ++correct;
+        std::cout << "Prediction: " << finalPrediction << "(true one " << row[0] << ")" << std::endl;
     }
-    return (static_cast<double>(correct) / data.size());
-}
-void Infer::getPredictions()
-{
-    double valAcc = computeValidationAcc();
-    std::cout << "valAcc=" << valAcc << std::endl;
 }

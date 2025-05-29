@@ -27,24 +27,16 @@ double Neuron::forward(std::vector<double>& input)
 
 double Neuron::backward(double delta, bool isHiddenLayer, double learningRate)
 {
-    double activationDerivative = 0.0;
     if (isHiddenLayer)
     {
-        activationDerivative = (lastSum > 0.0) ? 1.0 : 0.01;
-        delta = delta * activationDerivative;
-        for (size_t i = 0; i < weights.size(); ++i)
-            weights[i] -= learningRate * lastInput[i] * delta;
-        bias -= learningRate * delta;
+        double activationDerivative = (lastSum > 0.0) ? 1.0 : 0.0;
+        delta *= activationDerivative;
     }
-    else
-    {
-        for (size_t i = 0; i < weights.size(); ++i)
-            weights[i] -= learningRate * lastInput[i] * delta;
-        bias -= learningRate * delta;
-    }
+    for (size_t i = 0; i < weights.size(); ++i)
+        weights[i] -= learningRate * lastInput[i] * delta;
+    bias -= learningRate * delta;
     return delta;
 }
-
 
 std::vector<double> Neuron::getWeights()
 {

@@ -31,7 +31,10 @@ double computeValidationAcc(MultilayerPerceptron &mlp, const std::vector<std::ve
 double Trainer::computeLoss(double label, const std::vector<double>& prediction)
 {
     double p1 = std::max(std::min(prediction[1], 1.0 - 1e-15), 1e-15);
-    return -1 * (label * std::log(p1) + (1.0 - label) * std::log(1.0 - p1));
+    if (label == 1.0)
+        return -1 * std::log(p1);
+    else
+        return -1 * std::log(1.0 - p1);
 }
 
 bool Trainer::earlyStop(MultilayerPerceptron &mlp, std::vector<std::vector<double>> &valData)

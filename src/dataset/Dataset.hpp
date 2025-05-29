@@ -63,4 +63,5 @@ public:
 
     std::vector<std::vector<double>>& getTrainingData();
 	std::vector<std::vector<double>>& getValidationData();
+	std::vector<std::vector<double>>& getData();
 };

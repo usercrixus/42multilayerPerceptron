@@ -1,20 +1,21 @@
-#include "Dataset.hpp"
-#include "MultilayerPerceptron.hpp"
+#include "dataset/Dataset.hpp"
+#include "multiLayerPerceptron/MultilayerPerceptron.hpp"
 #include <iostream>
-#include "Trainer.hpp"
-#include "Infer.hpp"
+#include "multiLayerPerceptron/utilities/Trainer.hpp"
+#include "multiLayerPerceptron/utilities/Infer.hpp"
 
 int main(int argc, char *argv[])
 {
-    if (argc != 3)
-        return (std::cout << "Usage error. 2 args needed. Dataset object path & model object path" << std::endl, 1);
-	Dataset d;
-	if (!d.loadDatasetObject(argv[1]))
-        return (std::cout << "Error during the loading of "<< argv[1] << std::endl, 1);
+    if (argc != 4)
+        return (std::cout << "Usage error. 3 args needed. Data csv path & separator & model object" << std::endl, 1);
+    Dataset d(argv[1], argv[2][0]);
+    if (!d.loadDatasetCSV())
+        return (std::cout << "Error during the loading of " << argv[1] << std::endl, 1);
+    d.normalize();
     MultilayerPerceptron mlp;
-    if (!mlp.loadModelObject(argv[2]))
-        return (std::cout << "Error during the loading of " << argv[2] << std::endl, 1);
-    Infer infer(mlp, d.getValidationData());
+    if (!mlp.loadModelObject(argv[3]))
+        return (std::cout << "Error during the loading of " << argv[3] << std::endl, 1);
+    Infer infer(mlp, d.getData());
     infer.getPredictions();
     return 0;
 }

@@ -20,8 +20,9 @@ public:
     std::vector<double> forward(std::vector<double>& input);
 	std::vector<double> backward(std::vector<double>& deltas, double learningRate);
     void ReLu(std::vector<double> &output);
+    void softmax(std::vector<double> &output);
 
-	int getInputSize();
+    int getInputSize();
 	int getOutputSize();
 	bool getIsHiddenLayer();
 	std::vector<Neuron> &getNeurons();

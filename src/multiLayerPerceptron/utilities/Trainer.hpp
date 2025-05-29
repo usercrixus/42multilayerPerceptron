@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MultilayerPerceptron.hpp"
+#include "../MultilayerPerceptron.hpp"
 #include <algorithm>
 
 class Trainer
