@@ -6,7 +6,7 @@ OBJ1 = \
 	src/multiLayerPerceptron/utilities/Trainer.o \
 	src/multiLayerPerceptron/utilities/Infer.o \
 
-CXXFLAGS = -I src/ -Wall -Wextra -O2
+CXXFLAGS = -I src/ -Wall -Wextra -Werror -std=c++17
 
 train.out: $(OBJ1) src/mainTrain.o
 	c++ $^ -o $@
