@@ -8,6 +8,8 @@ OBJ1 = \
 
 CXXFLAGS = -I src/ -Wall -Wextra -Werror -std=c++17
 
+all: train.out data.out infer.out
+
 train.out: $(OBJ1) src/mainTrain.o
 	c++ $^ -o $@
 
@@ -28,5 +30,7 @@ clean:
 
 fclean: clean
 	rm -f train.out *.csv *.png *.out *.obj
+
+re: fclean all
 
 .PHONY: clean fclean init
