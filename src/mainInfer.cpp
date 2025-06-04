@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     if (argc != 4)
-        return (std::cout << "Usage error. 3 args needed. Data csv & dataset.obj path & model object" << std::endl, 1);
+        return (std::cout << "Usage error. 3 args needed. data csv path (input) & dataset object path (input) path & model object path (input)" << std::endl, 1);
     Dataset d;
     d.loadDatasetObject(argv[2]);
     if (!d.loadDatasetCSV(argv[1]))

@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     if (argc != 3)
-        return (std::cout << "Usage error. 2 args needed. dataset object path & model object path" << std::endl, 1);
+        return (std::cout << "Usage error. 2 args needed. dataset object path (input) & model object path (output)" << std::endl, 1);
     Dataset d;
     if (!d.loadDatasetObject(argv[1]))
         return (std::cout << "Error during the loading of " << argv[1] << std::endl, 1);

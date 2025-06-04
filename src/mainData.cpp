@@ -3,7 +3,7 @@
 int main(int argc, char *argv[])
 {
     if (argc != 3)
-        return (std::cout << "Usage error. 2 args needed. Data csv path & data object output path" << std::endl, 1);
+        return (std::cout << "Usage error. 2 args needed. data csv path (input) & data object path (output)" << std::endl, 1);
     Dataset d;
     if (!d.loadDatasetCSV(argv[1]))
         return (std::cout << "Error during the loading of " << argv[1] << std::endl, 1);
