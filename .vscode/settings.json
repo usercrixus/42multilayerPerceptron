@@ -79,6 +79,7 @@
         "__string": "cpp",
         "ios": "cpp",
         "complex": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "ranges": "cpp"
     }
 }

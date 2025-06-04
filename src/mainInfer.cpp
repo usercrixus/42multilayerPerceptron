@@ -7,9 +7,10 @@
 int main(int argc, char *argv[])
 {
     if (argc != 4)
-        return (std::cout << "Usage error. 3 args needed. Data csv path & separator & model object" << std::endl, 1);
-    Dataset d(argv[1], argv[2][0]);
-    if (!d.loadDatasetCSV())
+        return (std::cout << "Usage error. 3 args needed. Data csv & dataset.obj path & model object" << std::endl, 1);
+    Dataset d;
+    d.loadDatasetObject(argv[2]);
+    if (!d.loadDatasetCSV(argv[1]))
         return (std::cout << "Error during the loading of " << argv[1] << std::endl, 1);
     d.normalize();
     MultilayerPerceptron mlp;

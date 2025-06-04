@@ -2,15 +2,16 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc != 4)
-        return (std::cout << "Usage error. 3 args needed. Data csv path & separator & data object output path" << std::endl, 1);
-    Dataset d(argv[1], argv[2][0]);
-    if (!d.loadDatasetCSV())
+    if (argc != 3)
+        return (std::cout << "Usage error. 2 args needed. Data csv path & data object output path" << std::endl, 1);
+    Dataset d;
+    if (!d.loadDatasetCSV(argv[1]))
         return (std::cout << "Error during the loading of " << argv[1] << std::endl, 1);
+    d.computeStats();
     d.normalize();
     d.shuffle();
     d.splitData(0.2);
-    if (!d.saveDatasetObject(argv[3]))
+    if (!d.saveDatasetObject(argv[2]))
         return (std::cout << "Error during the saving of " << argv[3] << std::endl, 1);
     return (0);
 }
