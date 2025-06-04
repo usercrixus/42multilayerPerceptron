@@ -21,9 +21,7 @@ infer.out: $(OBJ1) src/mainInfer.o
 	c++ $(CXXFLAGS) -c $< -o $@
 
 init:
-	python3 -m venv venv \
-	source venv/bin/activate \
-	pip install pandas matplotlib
+	python3 -m venv venv; source venv/bin/activate;	pip install pandas matplotlib
 
 clean:
 	rm -f $(OBJ1)
