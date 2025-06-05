@@ -1,8 +1,6 @@
 #include "Trainer.hpp"
 
 Trainer::Trainer(bool csv):
-csvLoss(0),
-csvAccuracy(0),
 isCSV(csv)
 {
 }
