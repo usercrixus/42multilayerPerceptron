@@ -37,7 +37,8 @@ bool MultilayerPerceptron::saveModelObject(const std::string& filename)
     std::ofstream out(filename, std::ios::binary);
     if (!out.is_open())
         return (false);
-    out.rdbuf()->pubsetbuf(nullptr, 0);
+    char buffer[1024];
+    out.rdbuf()->pubsetbuf(buffer, sizeof(buffer));
     size_t numLayers = layers.size();
     out.write(reinterpret_cast<const char*>(&numLayers), sizeof(numLayers));
 
