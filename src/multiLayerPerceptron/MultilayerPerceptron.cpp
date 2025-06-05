@@ -21,16 +21,6 @@ std::vector<double> MultilayerPerceptron::forward(std::vector<double>& input)
     return output;
 }
 
-
-/**
- * prediction[0] = 0.8;  // probabilité estimée pour la classe 0  
- * prediction[1] = 0.2;  // probabilité estimée pour la classe 1
- * Pour i = 0 (classe correcte) :
- * δ[0] = prediction[0] − 1.0 = 0.8 − 1.0 = −0.2
- * Pour i = 1 (classe incorrecte) :
- * δ[1] = prediction[1] − 0.0 = 0.2 − 0.0 = 0.2
- * δ[1] = prediction[1] − 0.0 = 0.2 − 0.0 = 0.2
- */
 void MultilayerPerceptron::trainStep(std::vector<double>& input, double trueLabel, double learningRate)
 {
     std::vector<double> prediction = forward(input);

@@ -13,10 +13,8 @@ bool Dataset::loadDatasetCSV(std::string fileName)
     data.clear();
     std::ifstream file(fileName);
     if (!file.is_open())
-    {
-        std::cerr << "Failed to open file: " << fileName << std::endl;
-        return false;
-    }
+        return (std::cerr << "Failed to open file: " << fileName << std::endl, false);
+
     std::string line;
     while (std::getline(file, line))
     {
@@ -90,7 +88,6 @@ void Dataset::normalize()
     }
 }
 
-
 void Dataset::shuffle()
 {
     std::random_device rd;
@@ -116,7 +113,8 @@ void Dataset::saveVector(std::ofstream &out, const std::vector<std::vector<doubl
 {
     size_t vectorSize = vector.size();
     out.write(reinterpret_cast<const char *>(&vectorSize), sizeof(vectorSize));
-    for (const auto &row : vector) {
+    for (const auto &row : vector)
+    {
         size_t rowSize = row.size();
         out.write(reinterpret_cast<const char *>(&rowSize), sizeof(rowSize));
         out.write(reinterpret_cast<const char *>(row.data()), rowSize * sizeof(double));
@@ -126,9 +124,10 @@ void Dataset::saveVector(std::ofstream &out, const std::vector<std::vector<doubl
 bool Dataset::saveDatasetObject(const std::string &filename)
 {
     std::ofstream out(filename, std::ios::binary);
-    if (!out.is_open()) {
+    if (!out.is_open())
+    {
         std::cerr << "Error opening file for writing: " << filename << std::endl;
-        return false;
+        return (false);
     }
 
     // 1) Save the 2D vectors (data, validationData, trainingData)
@@ -139,19 +138,21 @@ bool Dataset::saveDatasetObject(const std::string &filename)
     // 2) Save featureMeans (1D)
     size_t meansCount = featureMeans.size();
     out.write(reinterpret_cast<const char *>(&meansCount), sizeof(meansCount));
-    if (meansCount > 0) {
+    if (meansCount > 0)
+    {
         out.write(reinterpret_cast<const char *>(featureMeans.data()), meansCount * sizeof(double));
     }
 
     // 3) Save featureStddevs (1D)
     size_t stddevCount = featureStddevs.size();
     out.write(reinterpret_cast<const char *>(&stddevCount), sizeof(stddevCount));
-    if (stddevCount > 0) {
+    if (stddevCount > 0)
+    {
         out.write(reinterpret_cast<const char *>(featureStddevs.data()), stddevCount * sizeof(double));
     }
 
     out.close();
-    return true;
+    return (true);
 }
 
 void Dataset::loadVector(std::ifstream &in, std::vector<std::vector<double>> &vector)
@@ -159,7 +160,8 @@ void Dataset::loadVector(std::ifstream &in, std::vector<std::vector<double>> &ve
     size_t vectorSize;
     in.read(reinterpret_cast<char *>(&vectorSize), sizeof(vectorSize));
     vector.resize(vectorSize);
-    for (auto &row : vector) {
+    for (auto &row : vector)
+    {
         size_t rowSize;
         in.read(reinterpret_cast<char *>(&rowSize), sizeof(rowSize));
         row.resize(rowSize);
@@ -170,9 +172,10 @@ void Dataset::loadVector(std::ifstream &in, std::vector<std::vector<double>> &ve
 bool Dataset::loadDatasetObject(const std::string &filename)
 {
     std::ifstream in(filename, std::ios::binary);
-    if (!in.is_open()) {
+    if (!in.is_open())
+    {
         std::cerr << "Error opening file for reading: " << filename << std::endl;
-        return false;
+        return (false);
     }
 
     // 1) Load the 2D vectors
@@ -184,7 +187,8 @@ bool Dataset::loadDatasetObject(const std::string &filename)
     size_t meansCount;
     in.read(reinterpret_cast<char *>(&meansCount), sizeof(meansCount));
     featureMeans.resize(meansCount);
-    if (meansCount > 0) {
+    if (meansCount > 0)
+    {
         in.read(reinterpret_cast<char *>(featureMeans.data()), meansCount * sizeof(double));
     }
 
@@ -192,14 +196,14 @@ bool Dataset::loadDatasetObject(const std::string &filename)
     size_t stddevCount;
     in.read(reinterpret_cast<char *>(&stddevCount), sizeof(stddevCount));
     featureStddevs.resize(stddevCount);
-    if (stddevCount > 0) {
+    if (stddevCount > 0)
+    {
         in.read(reinterpret_cast<char *>(featureStddevs.data()), stddevCount * sizeof(double));
     }
 
     in.close();
-    return true;
+    return (true);
 }
-
 
 std::vector<std::vector<double>> &Dataset::getTrainingData()
 {
