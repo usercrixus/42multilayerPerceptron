@@ -11,7 +11,6 @@ class MultilayerPerceptron
 {
 private:
 	std::vector<Layer> layers;
-	double learningRate;
 
 public:
 	MultilayerPerceptron();
