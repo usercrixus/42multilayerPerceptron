@@ -17,9 +17,13 @@ int main(int argc, char *argv[])
     if (!mlp.saveModelObject(argv[2]))
         return (std::cout << "Error during the loading of " << argv[2] << std::endl, 1);
 
-    if (system("python3 plotter.py csvAccuracy.csv") < 0)
+    if (system("python3 plotter.py csvLossTrainData.csv") < 0)
         return (std::cout << "Error during the display of the graph" << std::endl, 1);
-    if (system("python3 plotter.py csvLoss.csv") < 0)
+    if (system("python3 plotter.py csvAccuracyTrainData.csv") < 0)
+        return (std::cout << "Error during the display of the graph" << std::endl, 1);
+    if (system("python3 plotter.py csvLossValidationData.csv") < 0)
+        return (std::cout << "Error during the display of the graph" << std::endl, 1);
+    if (system("python3 plotter.py csvAccuracyValidationData.csv") < 0)
         return (std::cout << "Error during the display of the graph" << std::endl, 1);
     return 0;
 }

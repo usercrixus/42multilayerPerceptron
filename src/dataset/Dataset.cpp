@@ -177,12 +177,10 @@ bool Dataset::loadDatasetObject(const std::string &filename)
         std::cerr << "Error opening file for reading: " << filename << std::endl;
         return (false);
     }
-
     // 1) Load the 2D vectors
     loadVector(in, data);
     loadVector(in, validationData);
     loadVector(in, trainingData);
-
     // 2) Load featureMeans (1D)
     size_t meansCount;
     in.read(reinterpret_cast<char *>(&meansCount), sizeof(meansCount));
