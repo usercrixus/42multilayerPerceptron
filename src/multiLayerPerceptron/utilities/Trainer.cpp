@@ -1,10 +1,6 @@
 #include "Trainer.hpp"
 
-Trainer::Trainer(bool csv) : csvLossTrainData(0),
-                             csvAccuracyTrainData(0),
-                             csvLossValidationData(0),
-                             csvAccuracyValidationData(0),
-                             isCSV(csv)
+Trainer::Trainer(bool csv) : isCSV(csv)
 {
 }
 
