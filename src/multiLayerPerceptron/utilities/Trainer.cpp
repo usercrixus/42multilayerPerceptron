@@ -74,6 +74,7 @@ void Trainer::buildCSV(int epoch, double lossTrain, double accuracyTrain, double
     csvAccuracyTrainData << epoch << "," << accuracyTrain << std::endl;
     csvLossValidationData << epoch << "," << lossVal << std::endl;
     csvAccuracyValidationData << epoch << "," << accuracyVal << std::endl;
+    std::cout << "epoch: " << epoch << " loss: " << lossTrain << " valLoss: " << lossVal << std::endl;
 }
 
 bool Trainer::train(MultilayerPerceptron &mlp, std::vector<std::vector<double>> &trainingData, std::vector<std::vector<double>> &valData, int epoch, double learningRate)
