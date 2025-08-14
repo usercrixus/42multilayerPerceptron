@@ -1,7 +1,8 @@
 # Multilayer Perceptron C++ Framework
 
 This project implements a Multilayer Perceptron (MLP) in C++, including modules for data loading, training, inference, and evaluation.  
-Project Structure
+
+## Project Structure
 
 ```
 dataInfer.csv  dataTrain.csv  en.subject.pdf  Makefile  README.md  src  venv
