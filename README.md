@@ -42,6 +42,10 @@ Init
 
     python3 -m venv venv; source venv/bin/activate; pip install pandas matplotlib
 
+Dataset Generation or Preprocessing
+
+    ./data
+
 Training
 
     ./train
@@ -49,10 +53,6 @@ Training
 Inference
 
     ./infer
-
-Dataset Generation or Preprocessing
-
-    ./data
 
 ### HELPER
 
