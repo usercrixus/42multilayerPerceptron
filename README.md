@@ -38,17 +38,25 @@ plotter.py
 ## 🚀 Running
 
 Init
+
     python3 -m venv venv; source venv/bin/activate; pip install pandas matplotlib
+
 Training
+
     ./train
+
 Inference
+
     ./infer
+
 Dataset Generation or Preprocessing
+
     ./data
 
 ### HELPER
 
 Compile and execute:
+
     make data
     make train
     make infer
