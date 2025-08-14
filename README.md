@@ -29,7 +29,7 @@ plotter.py
     Supervised training using backpropagation (Trainer).
     Save/load model for inference purposes.
 
-## ⚙️ Compilation
+## Compilation
 
     make train.out
     make data.out
