@@ -16,14 +16,17 @@ int main(int argc, char *argv[])
     train.train(mlp, d.getTrainingData(), d.getValidationData(), 1000, 0.01);
     if (!mlp.saveModelObject(argv[2]))
         return (std::cout << "Error during the loading of " << argv[2] << std::endl, 1);
+    d.clear();
+    if (!d.saveDatasetObject(argv[1]))
+        return (std::cout << "Error during the saving of " << argv[3] << std::endl, 1);
 
-    if (system("python3 plotter.py csvLossTrainData.csv") < 0)
+    if (system("python3 src/plotter/plotter.py csvLossTrainData.csv") < 0)
         return (std::cout << "Error during the display of the graph" << std::endl, 1);
-    if (system("python3 plotter.py csvAccuracyTrainData.csv") < 0)
+    if (system("python3 src/plotter/plotter.py csvAccuracyTrainData.csv") < 0)
         return (std::cout << "Error during the display of the graph" << std::endl, 1);
-    if (system("python3 plotter.py csvLossValidationData.csv") < 0)
+    if (system("python3 src/plotter/plotter.py csvLossValidationData.csv") < 0)
         return (std::cout << "Error during the display of the graph" << std::endl, 1);
-    if (system("python3 plotter.py csvAccuracyValidationData.csv") < 0)
+    if (system("python3 src/plotter/plotter.py csvAccuracyValidationData.csv") < 0)
         return (std::cout << "Error during the display of the graph" << std::endl, 1);
     return 0;
 }

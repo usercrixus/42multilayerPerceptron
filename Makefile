@@ -25,11 +25,20 @@ infer.out: $(OBJ1) src/mainInfer.o
 init:
 	python3 -m venv venv; source venv/bin/activate; pip install pandas matplotlib
 
+data: data.out
+	./data.out dataTrain.csv data.obj
+
+train: train.out
+	./train.out data.obj model.mo
+
+infer: infer.out
+	./infer.out data.obj dataInfer.csv model.mo 
+
 clean:
 	rm -f $(OBJ1)
 
 fclean: clean
-	rm -f train.out *.csv *.png *.out *.obj
+	rm -f train.out csv*.csv *.png *.out *.obj *mo
 
 re: fclean all
 

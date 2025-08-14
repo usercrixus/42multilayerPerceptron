@@ -3,16 +3,24 @@
 This project implements a Multilayer Perceptron (MLP) in C++, including modules for data loading, training, inference, and evaluation.
 📁 Project Structure
 
-    src/
-    ├── Dataset.*                # Data loading and handling
-    ├── Infer.*                  # Inference using a trained model
-    ├── Layer.*                  # Implementation of a neural network layer
-    ├── MultilayerPerceptron.*   # Definition of the full MLP model
-    ├── Neuron.*                 # Individual neuron logic
-    ├── Trainer.*                # Supervised training logic
-    ├── mainTrain.cpp            # Entry point for training
-    ├── mainInfer.cpp            # Entry point for inference
-    ├── mainData.cpp             # Dataset generation or preprocessing
+```
+dataInfer.csv  dataTrain.csv  en.subject.pdf  Makefile  README.md  src  venv
+
+src:
+dataset  mainData.cpp  mainData.o  mainInfer.cpp  mainInfer.o  mainTrain.cpp  mainTrain.o  multiLayerPerceptron  plotter
+
+src/dataset:
+Dataset.cpp  Dataset.hpp
+
+src/multiLayerPerceptron:
+Layer.cpp  Layer.hpp  MultilayerPerceptron.cpp  MultilayerPerceptron.hpp  Neuron.cpp  Neuron.hpp  utilities
+
+src/multiLayerPerceptron/utilities:
+Infer.cpp  Infer.hpp  Trainer.cpp  Trainer.hpp
+
+src/plotter:
+plotter.py
+```
 
 ## 🧠 Features
 
@@ -28,15 +36,23 @@ This project implements a Multilayer Perceptron (MLP) in C++, including modules 
     make infer.out
 
 ## 🚀 Running
-Training
 
+Init
+    python3 -m venv venv; source venv/bin/activate; pip install pandas matplotlib
+Training
     ./train
 Inference
-
     ./infer
 Dataset Generation or Preprocessing
-
     ./data
+
+### HELPER
+
+Compile and execute:
+    make data
+    make train
+    make infer
+
 
 ## 📌 Notes
 

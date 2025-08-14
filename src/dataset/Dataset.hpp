@@ -62,6 +62,17 @@ public:
      * return: true if all is right, false else.
      */
     bool loadDatasetObject(const std::string &filename);
+    /**
+     * Clear
+     *      std::vector<std::vector<double>> data;
+     *      std::vector<std::vector<double>> validationData;
+     *      std::vector<std::vector<double>> trainingData;
+     * 
+     * You should use it after training, then save the new dataset
+     * object (potentialy on the same name to erase the previous one)
+     * then, reuse it the the infer part for normalization.
+     */
+    void clear();
 
     std::vector<std::vector<double>> &getTrainingData();
     std::vector<std::vector<double>> &getValidationData();

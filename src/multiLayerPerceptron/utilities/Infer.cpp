@@ -25,6 +25,7 @@ void Infer::getPredictions()
     for (auto& row : data) {
         std::vector<double> input(row.begin()+1, row.end());
         auto prediction = mlp.forward(input);
-        std::cout << "Prediction loss: " << computeLoss(row[0], prediction) << std::endl;
+        std::cout.precision(2);
+        std::cout << "Prediction: " << (prediction[1] > prediction[0] ? "1" : "0") << " true label: " << row[0] << " loss: " << computeLoss(row[0], prediction) << std::endl;
     }
 }

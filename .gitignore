@@ -1,6 +1,8 @@
 *.o
+*.mo
 *.out
 *.obj
-*.csv
+csv*.csv
 *.png
 venv
+.vscode

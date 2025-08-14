@@ -203,6 +203,13 @@ bool Dataset::loadDatasetObject(const std::string &filename)
     return (true);
 }
 
+void Dataset::clear()
+{
+    data.clear();
+    validationData.clear();
+    trainingData.clear();
+}
+
 std::vector<std::vector<double>> &Dataset::getTrainingData()
 {
     return (trainingData);
