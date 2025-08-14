@@ -1,7 +1,7 @@
-# 📚 Multilayer Perceptron C++ Framework
+# Multilayer Perceptron C++ Framework
 
-This project implements a Multilayer Perceptron (MLP) in C++, including modules for data loading, training, inference, and evaluation.
-📁 Project Structure
+This project implements a Multilayer Perceptron (MLP) in C++, including modules for data loading, training, inference, and evaluation.  
+Project Structure
 
 ```
 dataInfer.csv  dataTrain.csv  en.subject.pdf  Makefile  README.md  src  venv
@@ -22,7 +22,7 @@ src/plotter:
 plotter.py
 ```
 
-## 🧠 Features
+## Features
 
     Customizable MLP architecture (layers, neurons, activation functions).
     Simple dataset interface via Dataset.
@@ -35,7 +35,7 @@ plotter.py
     make data.out
     make infer.out
 
-## 🚀 Running
+## Running
 
 Init
 
@@ -62,7 +62,7 @@ Compile and execute:
     make infer
 
 
-## 📌 Notes
+## Notes
 
     No external libraries required (100% pure C++).
     Compile with -O2 or -O3 for better performance.
